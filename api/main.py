@@ -4,12 +4,16 @@ from __future__ import annotations
 from contextlib import asynccontextmanager
 from typing import AsyncIterator
 
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Request
 from openai import AsyncOpenAI
-from pydantic import BaseModel
 
+from api.schemas import AgentOutput, ResearchRequest, ResearchResponse
 from config.settings import settings
-from src.agents.researcher import ResearcherAgent
+from src.agents.competitor_analyzer import CompetitorAnalyzerAgent
+from src.agents.news_analyzer import NewsAnalyzerAgent
+from src.agents.orchestrator import Orchestrator
+from src.agents.web_researcher import WebResearcherAgent
+from src.agents.writer import WriterAgent
 from src.mcp.client import MCPClientError, make_duckduckgo_client
 from src.utils.logger import configure_logging, get_logger
 
@@ -28,8 +32,20 @@ async def lifespan(app: FastAPI) -> AsyncIterator[None]:
         raise RuntimeError(f"MCP startup failed: {exc}") from exc
 
     openai_client = AsyncOpenAI(api_key=settings.openai_api_key)
+    model = settings.worker_model
+
+    orchestrator = Orchestrator(
+        agents={
+            "web_researcher": WebResearcherAgent(openai_client, model, mcp_client),
+            "news_analyzer": NewsAnalyzerAgent(openai_client, model, mcp_client),
+            "competitor_analyzer": CompetitorAnalyzerAgent(openai_client, model, mcp_client),
+            "writer": WriterAgent(openai_client, model),
+        }
+    )
+
     app.state.mcp_client = mcp_client
     app.state.openai_client = openai_client
+    app.state.orchestrator = orchestrator
     logger.info("startup_complete", tools=mcp_client.list_tools())
 
     yield
@@ -42,41 +58,34 @@ async def lifespan(app: FastAPI) -> AsyncIterator[None]:
 app = FastAPI(
     title="IndiaVC Research API",
     description="Multi-agent AI system for Indian startup due diligence",
-    version="0.1.0",
+    version="0.2.0",
     lifespan=lifespan,
 )
 
 
-class ResearchRequest(BaseModel):
-    question: str
-
-
-class ResearchResponse(BaseModel):
-    answer: str
-    sources: list[str]
-    tool_calls_made: list[dict]
-
-
 @app.get("/health")
 async def health() -> dict:
-    return {"status": "ok", "version": "0.1.0"}
+    return {"status": "ok", "version": "0.2.0"}
 
 
 @app.post("/research", response_model=ResearchResponse)
-async def research(request: ResearchRequest) -> ResearchResponse:
+async def research(request: ResearchRequest, app_request: Request) -> ResearchResponse:
     if not request.question.strip():
         raise HTTPException(status_code=422, detail="question must not be empty")
 
-    agent = ResearcherAgent(
-        mcp_client=app.state.mcp_client,
-        openai_client=app.state.openai_client,
-        model=settings.worker_model,
-        max_iterations=settings.max_agent_iterations,
-    )
+    orchestrator: Orchestrator = app_request.app.state.orchestrator
     try:
-        result = await agent.research(request.question)
+        result = await orchestrator.run_research(request.question)
     except Exception as exc:
         logger.error("research_failed", error=str(exc))
         raise HTTPException(status_code=500, detail=str(exc)) from exc
 
-    return ResearchResponse(**result)
+    return ResearchResponse(
+        brief=result["final_brief"],
+        agent_outputs={
+            name: AgentOutput(**out)
+            for name, out in result["agent_outputs"].items()
+        },
+        total_tool_calls=result["total_tool_calls"],
+        execution_time_seconds=result["execution_time_seconds"],
+    )

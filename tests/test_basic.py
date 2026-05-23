@@ -1,4 +1,4 @@
-"""Basic sanity tests for IndiaVC Week 1 scaffold."""
+"""Basic sanity tests for IndiaVC Week 1/2 scaffold."""
 from __future__ import annotations
 
 from unittest.mock import AsyncMock, MagicMock
@@ -23,8 +23,6 @@ def test_settings_loads() -> None:
 async def test_health_endpoint() -> None:
     from api.main import app
 
-    # ASGITransport does not trigger the lifespan scope, so /health
-    # (which touches no state) works without any setup.
     async with AsyncClient(
         transport=ASGITransport(app=app), base_url="http://test"
     ) as client:
@@ -34,38 +32,40 @@ async def test_health_endpoint() -> None:
     assert response.json()["status"] == "ok"
 
 
-# ── test 3: /research with mocked MCP + OpenAI ───────────────────────────────
+# ── test 3: /research with mocked orchestrator ────────────────────────────────
 
 @pytest.mark.asyncio
 async def test_research_endpoint_with_mock() -> None:
-    # Mock MCP client
-    mock_mcp = MagicMock()
-    mock_mcp.connect = AsyncMock()
-    mock_mcp.disconnect = AsyncMock()
-    mock_mcp.list_tools = MagicMock(return_value=[])
-
-    # Fake OpenAI completion — returns a final answer immediately (no tool calls)
-    fake_message = MagicMock()
-    fake_message.tool_calls = None
-    fake_message.content = (
-        "Razorpay was founded in 2014 and has raised over $740M. https://razorpay.com"
-    )
-    fake_message.model_dump = MagicMock(
-        return_value={"role": "assistant", "content": fake_message.content}
-    )
-    fake_choice = MagicMock()
-    fake_choice.message = fake_message
-    fake_completion = MagicMock()
-    fake_completion.choices = [fake_choice]
-
-    mock_openai_instance = MagicMock()
-    mock_openai_instance.chat.completions.create = AsyncMock(return_value=fake_completion)
-
     from api.main import app
 
-    # ASGITransport skips the ASGI lifespan scope, so we wire app.state directly.
-    app.state.mcp_client = mock_mcp
-    app.state.openai_client = mock_openai_instance
+    mock_orchestrator = MagicMock()
+    mock_orchestrator.run_research = AsyncMock(
+        return_value={
+            "final_brief": "Razorpay was founded in 2014. https://razorpay.com",
+            "agent_outputs": {
+                "web_researcher": {
+                    "output": "Razorpay: fintech founded 2014.",
+                    "sources": ["https://razorpay.com"],
+                    "tool_calls": 1,
+                },
+                "news_analyzer": {
+                    "output": "No major controversies found.",
+                    "sources": [],
+                    "tool_calls": 1,
+                },
+                "competitor_analyzer": {
+                    "output": "Competitors: PayU, Cashfree.",
+                    "sources": [],
+                    "tool_calls": 1,
+                },
+            },
+            "total_tool_calls": 3,
+            "execution_time_seconds": 5.0,
+        }
+    )
+
+    # ASGITransport skips the ASGI lifespan — wire state directly.
+    app.state.orchestrator = mock_orchestrator
 
     try:
         async with AsyncClient(
@@ -76,13 +76,12 @@ async def test_research_endpoint_with_mock() -> None:
                 json={"question": "What is the funding history of Razorpay?"},
             )
     finally:
-        # Clean up so other tests start fresh
-        del app.state.mcp_client
-        del app.state.openai_client
+        del app.state.orchestrator
 
     assert response.status_code == 200
     data = response.json()
-    assert "answer" in data
-    assert isinstance(data["sources"], list)
-    assert isinstance(data["tool_calls_made"], list)
-    assert len(data["answer"]) > 0
+    assert "brief" in data
+    assert "agent_outputs" in data
+    assert "total_tool_calls" in data
+    assert "execution_time_seconds" in data
+    assert len(data["brief"]) > 0
