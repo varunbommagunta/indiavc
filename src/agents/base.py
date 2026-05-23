@@ -24,15 +24,29 @@ class BaseAgent:
     name: str = ""
     role: str = ""
 
+    # Subclasses declare their complexity tier; router picks the model.
+    # Import deferred to avoid circular import at module load time.
+    complexity: Any = None  # set to TaskComplexity.MEDIUM by default in __init__
+
     def __init__(
         self,
         openai_client: AsyncOpenAI,
-        model: str = "gpt-4o-mini",
+        model: str | None = None,
         mcp_client: MCPClient | None = None,
     ) -> None:
+        from src.router import TaskComplexity, router
+
         self._openai = openai_client
-        self._model = model
         self._mcp = mcp_client
+        # Use explicit model override (e.g. from tests) or route via complexity tier
+        effective_complexity = self.complexity if self.complexity is not None else TaskComplexity.MEDIUM
+        self._model = model if model is not None else router.model_for(effective_complexity)
+        logger.info(
+            "agent_initialized",
+            agent=self.__class__.__name__,
+            model=self._model,
+            complexity=str(effective_complexity),
+        )
 
     def _build_messages(
         self, system_prompt: str, task: str, context: dict[str, Any] | None = None

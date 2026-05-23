@@ -10,10 +10,12 @@ from openai import AsyncOpenAI
 from api.schemas import AgentOutput, ResearchRequest, ResearchResponse
 from config.settings import settings
 from src.agents.competitor_analyzer import CompetitorAnalyzerAgent
+from src.agents.critic import CriticAgent
 from src.agents.news_analyzer import NewsAnalyzerAgent
 from src.agents.orchestrator import Orchestrator
 from src.agents.web_researcher import WebResearcherAgent
 from src.agents.writer import WriterAgent
+from src.guardrails import Guardrails
 from src.mcp.client import MCPClientError, make_duckduckgo_client
 from src.utils.logger import configure_logging, get_logger
 
@@ -32,19 +34,22 @@ async def lifespan(app: FastAPI) -> AsyncIterator[None]:
         raise RuntimeError(f"MCP startup failed: {exc}") from exc
 
     openai_client = AsyncOpenAI(api_key=settings.openai_api_key)
-    model = settings.worker_model
+
+    guardrails = Guardrails(openai_client)
 
     orchestrator = Orchestrator(
         agents={
-            "web_researcher": WebResearcherAgent(openai_client, model, mcp_client),
-            "news_analyzer": NewsAnalyzerAgent(openai_client, model, mcp_client),
-            "competitor_analyzer": CompetitorAnalyzerAgent(openai_client, model, mcp_client),
-            "writer": WriterAgent(openai_client, model),
+            "web_researcher": WebResearcherAgent(openai_client, mcp_client=mcp_client),
+            "news_analyzer": NewsAnalyzerAgent(openai_client, mcp_client=mcp_client),
+            "competitor_analyzer": CompetitorAnalyzerAgent(openai_client, mcp_client=mcp_client),
+            "critic": CriticAgent(openai_client),
+            "writer": WriterAgent(openai_client),
         }
     )
 
     app.state.mcp_client = mcp_client
     app.state.openai_client = openai_client
+    app.state.guardrails = guardrails
     app.state.orchestrator = orchestrator
     logger.info("startup_complete", tools=mcp_client.list_tools())
 
@@ -58,14 +63,14 @@ async def lifespan(app: FastAPI) -> AsyncIterator[None]:
 app = FastAPI(
     title="IndiaVC Research API",
     description="Multi-agent AI system for Indian startup due diligence",
-    version="0.2.0",
+    version="0.3.0",
     lifespan=lifespan,
 )
 
 
 @app.get("/health")
 async def health() -> dict:
-    return {"status": "ok", "version": "0.2.0"}
+    return {"status": "ok", "version": "0.3.0"}
 
 
 @app.post("/research", response_model=ResearchResponse)
@@ -73,7 +78,16 @@ async def research(request: ResearchRequest, app_request: Request) -> ResearchRe
     if not request.question.strip():
         raise HTTPException(status_code=422, detail="question must not be empty")
 
+    guardrails: Guardrails = app_request.app.state.guardrails
     orchestrator: Orchestrator = app_request.app.state.orchestrator
+
+    check = await guardrails.check(request.question)
+    if check["decision"] == "refuse":
+        raise HTTPException(
+            status_code=400,
+            detail={"error": "Query refused by safety policy", "reason": check["reason"]},
+        )
+
     try:
         result = await orchestrator.run_research(request.question)
     except Exception as exc:

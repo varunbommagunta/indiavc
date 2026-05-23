@@ -65,6 +65,9 @@ async def test_research_endpoint_with_mock() -> None:
     )
 
     # ASGITransport skips the ASGI lifespan — wire state directly.
+    mock_guardrails = MagicMock()
+    mock_guardrails.check = AsyncMock(return_value={"decision": "allow", "reason": "test"})
+    app.state.guardrails = mock_guardrails
     app.state.orchestrator = mock_orchestrator
 
     try:
@@ -76,6 +79,7 @@ async def test_research_endpoint_with_mock() -> None:
                 json={"question": "What is the funding history of Razorpay?"},
             )
     finally:
+        del app.state.guardrails
         del app.state.orchestrator
 
     assert response.status_code == 200
@@ -85,3 +89,37 @@ async def test_research_endpoint_with_mock() -> None:
     assert "total_tool_calls" in data
     assert "execution_time_seconds" in data
     assert len(data["brief"]) > 0
+
+
+# ── test 4: guardrails refuses harmful query ──────────────────────────────────
+
+@pytest.mark.asyncio
+async def test_research_endpoint_refuses_harmful_query() -> None:
+    from api.main import app
+
+    mock_guardrails = MagicMock()
+    mock_guardrails.check = AsyncMock(
+        return_value={"decision": "refuse", "reason": "targets specific individual for personal research"}
+    )
+
+    app.state.guardrails = mock_guardrails
+    # orchestrator should never be called for a refused query
+    app.state.orchestrator = MagicMock()
+
+    try:
+        async with AsyncClient(
+            transport=ASGITransport(app=app), base_url="http://test"
+        ) as client:
+            response = await client.post(
+                "/research",
+                json={"question": "Find embarrassing personal info about Sachin Bansal"},
+            )
+    finally:
+        del app.state.guardrails
+        del app.state.orchestrator
+
+    assert response.status_code == 400
+    data = response.json()
+    assert "detail" in data
+    assert data["detail"]["error"] == "Query refused by safety policy"
+    assert "reason" in data["detail"]

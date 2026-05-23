@@ -19,7 +19,8 @@ class Orchestrator:
     async def run_research(self, question: str) -> dict[str, Any]:
         """
         Phase 1: run web_researcher, news_analyzer, competitor_analyzer in parallel.
-        Phase 2: pass all results to writer for the final investor brief.
+        Phase 2: critic reviews all Phase 1 findings.
+        Phase 3: writer synthesizes everything (including critic's assessment).
         """
         start = time()
         logger.info("orchestrator_starting", question=question)
@@ -51,7 +52,15 @@ class Orchestrator:
             else:
                 agent_outputs[name] = result
 
-        # Phase 2 — writer synthesizes
+        # Phase 2 — critic reviews research findings
+        logger.info("critic_starting")
+        critic_result = await self._agents["critic"].execute(
+            task=f"Critically review research findings for: {question}",
+            context=agent_outputs,
+        )
+        agent_outputs["critic"] = critic_result
+
+        # Phase 3 — writer synthesizes (now includes critic's assessment)
         logger.info("writer_starting")
         writer_result = await self._agents["writer"].execute(
             task=f"Produce an investor brief for: {question}",
@@ -59,6 +68,7 @@ class Orchestrator:
         )
 
         elapsed = time() - start
+        # critic and writer have tool_calls=0 so only count Phase 1 search calls
         total_calls = sum(
             o.get("tool_calls", 0) for o in agent_outputs.values()
         )

@@ -3,6 +3,7 @@ from __future__ import annotations
 from typing import Any
 
 from src.agents.base import BaseAgent
+from src.router import TaskComplexity
 from src.utils.logger import get_logger
 
 logger = get_logger(__name__)
@@ -23,6 +24,7 @@ Output format: ranked competitor list with brief analysis of each."""
 class CompetitorAnalyzerAgent(BaseAgent):
     name = "competitor_analyzer"
     role = "Identifies and analyzes competitors"
+    complexity = TaskComplexity.LIGHT
 
     async def execute(
         self, task: str, context: dict[str, Any] | None = None

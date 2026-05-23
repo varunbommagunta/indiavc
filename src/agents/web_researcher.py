@@ -3,6 +3,7 @@ from __future__ import annotations
 from typing import Any
 
 from src.agents.base import BaseAgent
+from src.router import TaskComplexity
 from src.utils.logger import get_logger
 
 logger = get_logger(__name__)
@@ -23,6 +24,7 @@ Output format: a structured summary with sources at the end."""
 class WebResearcherAgent(BaseAgent):
     name = "web_researcher"
     role = "Researches general company information and funding history"
+    complexity = TaskComplexity.LIGHT
 
     async def execute(
         self, task: str, context: dict[str, Any] | None = None

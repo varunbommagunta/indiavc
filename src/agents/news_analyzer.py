@@ -3,6 +3,7 @@ from __future__ import annotations
 from typing import Any
 
 from src.agents.base import BaseAgent
+from src.router import TaskComplexity
 from src.utils.logger import get_logger
 
 logger = get_logger(__name__)
@@ -24,6 +25,7 @@ Output format: structured findings with a severity assessment for each item (low
 class NewsAnalyzerAgent(BaseAgent):
     name = "news_analyzer"
     role = "Investigates company reputation and controversies"
+    complexity = TaskComplexity.LIGHT
 
     async def execute(
         self, task: str, context: dict[str, Any] | None = None
