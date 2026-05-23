@@ -16,6 +16,15 @@ class Orchestrator:
     def __init__(self, agents: dict[str, BaseAgent]) -> None:
         self._agents = agents
 
+    def _task_for(self, agent_name: str, question: str) -> str:
+        """Return the task string for a given agent."""
+        tasks = {
+            "web_researcher": f"Research general information about: {question}",
+            "news_analyzer": f"Investigate news, controversies, and reputation of: {question}",
+            "competitor_analyzer": f"Identify and analyze competitors of: {question}",
+        }
+        return tasks.get(agent_name, question)
+
     async def run_research(self, question: str) -> dict[str, Any]:
         """
         Phase 1: run web_researcher, news_analyzer, competitor_analyzer in parallel.

@@ -16,3 +16,11 @@ class ResearchResponse(BaseModel):
     agent_outputs: dict[str, AgentOutput]
     total_tool_calls: int
     execution_time_seconds: float
+
+
+class ApproveRequest(BaseModel):
+    session_id: str
+
+
+class RejectRequest(BaseModel):
+    session_id: str
