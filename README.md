@@ -1,6 +1,6 @@
 ---
 title: IndiaVC
-emoji: 🇮🇳
+emoji: 🚀
 colorFrom: blue
 colorTo: purple
 sdk: docker
