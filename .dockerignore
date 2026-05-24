@@ -1,0 +1,16 @@
+ui/node_modules
+ui/.next
+ui/build
+__pycache__
+*.pyc
+.pytest_cache
+.mypy_cache
+.venv
+venv
+.git
+.env
+.env.local
+docs/eval_results/*.json
+.idea
+.vscode
+*.log

@@ -54,3 +54,17 @@ async def test_guardrails_fails_open_on_error() -> None:
     result = await g.check("test query")
 
     assert result["decision"] == "allow"
+
+
+@pytest.mark.asyncio
+async def test_guardrails_allows_gaming_company_research() -> None:
+    """Dream11 and similar gaming companies are legitimate research subjects."""
+    mock_client = MagicMock()
+    mock_client.chat.completions.create = AsyncMock(
+        return_value=_mock_openai_response('{"decision": "allow", "reason": "valid Indian gaming company"}')
+    )
+
+    g = Guardrails(mock_client)
+    result = await g.check("Research Dream11's funding history")
+
+    assert result["decision"] == "allow"
