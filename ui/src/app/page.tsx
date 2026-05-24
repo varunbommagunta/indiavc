@@ -1,7 +1,23 @@
 "use client";
 
-import { useRef, useState } from "react";
-import { AlertTriangle, CheckCircle, Loader2, XCircle } from "lucide-react";
+import { useState, useRef } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import {
+  Loader2,
+  CheckCircle,
+  XCircle,
+  AlertTriangle,
+  Sparkles,
+  Search,
+  TrendingUp,
+  Eye,
+  Shield,
+  Brain,
+  ArrowRight,
+  RefreshCw,
+} from "lucide-react";
+import { type LucideIcon } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 // ── types ─────────────────────────────────────────────────────────────────────
 
@@ -33,14 +49,35 @@ interface ResearchState {
 
 // ── constants ─────────────────────────────────────────────────────────────────
 
-const API_URL =
-  process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8000";
+const API_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8000";
 
-const AGENT_LABELS: Record<string, string> = {
-  web_researcher: "🔍 Web Researcher",
-  news_analyzer: "📰 News Analyzer",
-  competitor_analyzer: "🏢 Competitor Analyzer",
-  critic: "🎯 Critic",
+interface AgentMeta {
+  name: string;
+  icon: LucideIcon;
+  color: string;
+}
+
+const AGENT_META: Record<string, AgentMeta> = {
+  web_researcher: {
+    name: "Web Researcher",
+    icon: Search,
+    color: "from-blue-500 to-cyan-500",
+  },
+  news_analyzer: {
+    name: "News Analyzer",
+    icon: TrendingUp,
+    color: "from-purple-500 to-pink-500",
+  },
+  competitor_analyzer: {
+    name: "Competitor Analyzer",
+    icon: Eye,
+    color: "from-orange-500 to-amber-500",
+  },
+  critic: {
+    name: "Critic",
+    icon: Shield,
+    color: "from-rose-500 to-red-500",
+  },
 };
 
 const INITIAL_AGENTS: Record<string, AgentState> = {
@@ -226,196 +263,395 @@ export default function Home() {
   // ── render ──────────────────────────────────────────────────────────────────
 
   return (
-    <main className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 p-4 md:p-8">
-      <div className="max-w-4xl mx-auto">
-        {/* Header */}
-        <header className="mb-8">
-          <h1 className="text-4xl font-bold text-slate-900">IndiaVC</h1>
-          <p className="text-slate-600 mt-2">
-            AI Research Team for Indian Startup Due Diligence
+    <main className="min-h-screen bg-animated-gradient relative overflow-hidden">
+      {/* Floating blobs */}
+      <div className="blob bg-blue-600 w-96 h-96 -top-20 -left-20 animate-float" />
+      <div
+        className="blob bg-purple-600 w-96 h-96 top-1/3 -right-20 animate-float"
+        style={{ animationDelay: "2s" }}
+      />
+      <div
+        className="blob bg-cyan-500 w-96 h-96 bottom-0 left-1/3 animate-float"
+        style={{ animationDelay: "4s" }}
+      />
+
+      {/* Subtle grid overlay */}
+      <div
+        className="absolute inset-0 opacity-[0.03] pointer-events-none"
+        style={{
+          backgroundImage: `linear-gradient(rgba(255,255,255,1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,1) 1px, transparent 1px)`,
+          backgroundSize: "40px 40px",
+        }}
+      />
+
+      <div className="relative z-10 max-w-5xl mx-auto px-4 py-12 md:px-8">
+        {/* Hero header */}
+        <motion.header
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          className="text-center mb-12"
+        >
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass mb-6">
+            <Sparkles className="w-4 h-4 text-cyan-400" />
+            <span className="text-sm text-slate-300">AI Research Team</span>
+          </div>
+
+          <h1 className="text-6xl md:text-7xl font-bold gradient-text mb-4">
+            IndiaVC
+          </h1>
+
+          <p className="text-xl text-slate-400 max-w-2xl mx-auto">
+            Multi-agent due diligence for Indian startups.
+            <br />
+            <span className="text-slate-500 text-sm">
+              5 specialized AI agents collaborate to produce investor-grade
+              research briefs.
+            </span>
           </p>
-        </header>
+        </motion.header>
 
-        {/* Input */}
-        {state.status === "idle" && (
-          <div className="bg-white rounded-lg shadow p-6 mb-6">
-            <label className="block text-sm font-medium text-slate-700 mb-2">
-              Company or topic to research
-            </label>
-            <input
-              type="text"
-              value={question}
-              onChange={(e) => setQuestion(e.target.value)}
-              onKeyDown={(e) => e.key === "Enter" && startResearch()}
-              placeholder="e.g. Razorpay, Yubi, PhonePe vs Paytm comparison"
-              className="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
-            />
-            <button
-              onClick={startResearch}
-              disabled={!question.trim()}
-              className="mt-4 w-full bg-blue-600 text-white font-medium py-3 rounded-lg hover:bg-blue-700 disabled:bg-slate-300 disabled:cursor-not-allowed transition-colors"
+        {/* Main content — animated state transitions */}
+        <AnimatePresence>
+          {/* Idle — query input */}
+          {state.status === "idle" && (
+            <motion.div
+              key="idle"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.4 }}
+              className="glass-strong rounded-2xl p-8 mb-8"
             >
-              Start Research
-            </button>
-          </div>
-        )}
-
-        {/* Live progress */}
-        {isActive && (
-          <div className="bg-white rounded-lg shadow p-6 mb-6">
-            <h2 className="text-xl font-semibold mb-4 text-slate-800">
-              Researching:{" "}
-              <span className="text-blue-600">{state.question}</span>
-            </h2>
-            <div className="space-y-3">
-              {Object.entries(state.agents).map(([name, agent]) => (
-                <AgentCard key={name} name={name} agent={agent} />
-              ))}
-            </div>
-            {state.status === "approved" && (
-              <div className="mt-4 flex items-center gap-2 text-blue-600">
-                <Loader2 className="w-4 h-4 animate-spin" />
-                <span className="text-sm">Generating final brief…</span>
+              <label className="block text-sm font-medium text-slate-300 mb-3">
+                What company or topic would you like to research?
+              </label>
+              <div className="relative group">
+                <input
+                  type="text"
+                  value={question}
+                  onChange={(e) => setQuestion(e.target.value)}
+                  onKeyDown={(e) => e.key === "Enter" && startResearch()}
+                  placeholder="e.g. Razorpay, Yubi, PhonePe vs Paytm comparison"
+                  className="w-full px-5 py-4 bg-white/5 border border-white/10 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:border-blue-500/50 focus:ring-2 focus:ring-blue-500/20 transition-all"
+                />
+                <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-blue-500/0 via-blue-500/20 to-purple-500/0 opacity-0 group-focus-within:opacity-100 transition-opacity pointer-events-none -z-10 blur-xl" />
               </div>
-            )}
-          </div>
-        )}
 
-        {/* HITL approval */}
-        {state.status === "awaiting_approval" && state.criticOutput && (
-          <div className="bg-amber-50 border-2 border-amber-300 rounded-lg p-6 mb-6">
-            <div className="flex items-start gap-3 mb-4">
-              <AlertTriangle className="w-6 h-6 text-amber-600 flex-shrink-0 mt-1" />
-              <div>
-                <h3 className="text-lg font-semibold text-amber-900">
-                  Critic&apos;s Assessment Ready
-                </h3>
-                <p className="text-sm text-amber-800 mt-1">
-                  Review the critic&apos;s findings before generating the final brief.
+              <button
+                onClick={startResearch}
+                disabled={!question.trim()}
+                className="mt-6 w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 disabled:from-slate-700 disabled:to-slate-700 disabled:cursor-not-allowed text-white font-semibold py-4 rounded-xl transition-all duration-300 flex items-center justify-center gap-2 group"
+              >
+                <span>Start Research</span>
+                <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+              </button>
+
+              <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-3 text-sm">
+                {[
+                  { icon: Search, text: "Web research" },
+                  { icon: TrendingUp, text: "News & sentiment analysis" },
+                  { icon: Eye, text: "Competitor landscape" },
+                  { icon: Shield, text: "Critic review for red flags" },
+                ].map((item, i) => (
+                  <div key={i} className="flex items-center gap-2 text-slate-400">
+                    <item.icon className="w-4 h-4 text-cyan-400" />
+                    <span>{item.text}</span>
+                  </div>
+                ))}
+              </div>
+            </motion.div>
+          )}
+
+          {/* Active — agent progress cards */}
+          {isActive && (
+            <motion.div
+              key="running"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.4 }}
+              className="glass-strong rounded-2xl p-8 mb-8"
+            >
+              <div className="mb-6">
+                <h2 className="text-2xl font-bold text-white mb-2">
+                  Researching:{" "}
+                  <span className="gradient-text">{state.question}</span>
+                </h2>
+                <p className="text-slate-400 text-sm">
+                  AI agents are gathering and analyzing information…
                 </p>
               </div>
-            </div>
 
-            <div className="bg-white rounded border border-amber-200 p-4 mb-4 max-h-96 overflow-y-auto">
-              <pre className="text-sm text-slate-700 whitespace-pre-wrap font-sans leading-relaxed">
-                {state.criticOutput}
-              </pre>
-            </div>
-
-            <div className="flex gap-3">
-              <button
-                onClick={approveAndContinue}
-                className="flex-1 bg-green-600 text-white font-medium py-3 rounded-lg hover:bg-green-700 transition-colors"
-              >
-                Approve &amp; Generate Final Brief
-              </button>
-              <button
-                onClick={rejectResearch}
-                className="flex-1 bg-slate-200 text-slate-700 font-medium py-3 rounded-lg hover:bg-slate-300 transition-colors"
-              >
-                Reject
-              </button>
-            </div>
-          </div>
-        )}
-
-        {/* Final brief */}
-        {state.status === "completed" && state.finalBrief && (
-          <div className="bg-white rounded-lg shadow p-6 mb-6">
-            <h2 className="text-xl font-semibold mb-4 text-green-700 flex items-center gap-2">
-              <CheckCircle className="w-6 h-6" /> Final Investor Brief
-            </h2>
-            <div className="bg-slate-50 rounded-lg p-4 max-h-[60vh] overflow-y-auto">
-              <pre className="text-sm text-slate-800 whitespace-pre-wrap font-sans leading-relaxed">
-                {state.finalBrief}
-              </pre>
-            </div>
-            <button
-              onClick={reset}
-              className="mt-6 bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors"
-            >
-              New Research
-            </button>
-          </div>
-        )}
-
-        {/* Refused */}
-        {state.status === "refused" && (
-          <div className="bg-red-50 border border-red-300 rounded-lg p-6 mb-6">
-            <div className="flex items-start gap-3">
-              <XCircle className="w-6 h-6 text-red-600 flex-shrink-0 mt-1" />
-              <div>
-                <h3 className="text-lg font-semibold text-red-900">
-                  Query Refused
-                </h3>
-                <p className="text-sm text-red-800 mt-1">
-                  {state.refusalReason}
-                </p>
+              <div className="space-y-4">
+                {Object.entries(state.agents).map(([name, agent]) => (
+                  <AgentCard key={name} name={name} agent={agent} />
+                ))}
               </div>
-            </div>
-            <button
-              onClick={reset}
-              className="mt-4 bg-red-600 text-white px-6 py-2 rounded-lg hover:bg-red-700 transition-colors"
-            >
-              Try Again
-            </button>
-          </div>
-        )}
 
-        {/* Rejected */}
-        {state.status === "rejected" && (
-          <div className="bg-slate-50 rounded-lg p-6 mb-6 text-center">
-            <p className="text-slate-600">Research was rejected.</p>
-            <button
-              onClick={reset}
-              className="mt-4 bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors"
+              {state.status === "approved" && (
+                <div className="mt-6 flex items-center gap-2 text-blue-400">
+                  <Loader2 className="w-4 h-4 animate-spin" />
+                  <span className="text-sm">Generating final brief…</span>
+                </div>
+              )}
+            </motion.div>
+          )}
+
+          {/* HITL approval */}
+          {state.status === "awaiting_approval" && state.criticOutput && (
+            <motion.div
+              key="hitl"
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 20 }}
+              transition={{ type: "spring", stiffness: 200, damping: 20 }}
+              className="glass-strong rounded-2xl border-2 border-amber-500/30 p-8 mb-8 glow-blue"
             >
-              New Research
-            </button>
-          </div>
-        )}
+              <div className="flex items-start gap-4 mb-6">
+                <div className="p-3 rounded-xl bg-amber-500/10 border border-amber-500/30 flex-shrink-0">
+                  <AlertTriangle className="w-6 h-6 text-amber-400" />
+                </div>
+                <div>
+                  <h3 className="text-xl font-bold text-white mb-1">
+                    Critic Review Complete
+                  </h3>
+                  <p className="text-sm text-slate-400">
+                    Review the findings before generating the final investor
+                    brief.
+                  </p>
+                </div>
+              </div>
+
+              <div className="bg-black/30 border border-white/5 rounded-xl p-6 mb-6 max-h-[400px] overflow-y-auto">
+                <pre className="text-sm text-slate-300 whitespace-pre-wrap font-sans leading-relaxed">
+                  {state.criticOutput}
+                </pre>
+              </div>
+
+              <div className="flex gap-3">
+                <button
+                  onClick={approveAndContinue}
+                  className="flex-1 bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-500 hover:to-emerald-500 text-white font-semibold py-4 rounded-xl transition-all flex items-center justify-center gap-2"
+                >
+                  <CheckCircle className="w-5 h-5" />
+                  <span>Approve &amp; Generate Brief</span>
+                </button>
+                <button
+                  onClick={rejectResearch}
+                  className="px-6 bg-white/5 hover:bg-white/10 text-slate-300 font-medium py-4 rounded-xl transition-all border border-white/10"
+                >
+                  Reject
+                </button>
+              </div>
+            </motion.div>
+          )}
+
+          {/* Final brief */}
+          {state.status === "completed" && state.finalBrief && (
+            <motion.div
+              key="completed"
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.5 }}
+              className="glass-strong rounded-2xl p-8 mb-8"
+            >
+              <div className="flex items-center gap-3 mb-6">
+                <div className="p-3 rounded-xl bg-green-500/10 border border-green-500/30">
+                  <CheckCircle className="w-6 h-6 text-green-400" />
+                </div>
+                <h2 className="text-2xl font-bold text-white">
+                  Investor Brief
+                </h2>
+              </div>
+
+              <div className="bg-black/30 border border-white/5 rounded-xl p-6 mb-6 max-h-[60vh] overflow-y-auto">
+                <pre className="text-sm text-slate-300 whitespace-pre-wrap font-sans leading-relaxed">
+                  {state.finalBrief}
+                </pre>
+              </div>
+
+              <button
+                onClick={reset}
+                className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white font-semibold px-6 py-3 rounded-xl transition-all flex items-center gap-2 group"
+              >
+                <RefreshCw className="w-5 h-5 group-hover:rotate-180 transition-transform duration-500" />
+                <span>New Research</span>
+              </button>
+            </motion.div>
+          )}
+
+          {/* Refused */}
+          {state.status === "refused" && (
+            <motion.div
+              key="refused"
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0 }}
+              className="glass-strong rounded-2xl border-2 border-red-500/30 p-8 mb-8"
+            >
+              <div className="flex items-start gap-4 mb-4">
+                <div className="p-3 rounded-xl bg-red-500/10 border border-red-500/30 flex-shrink-0">
+                  <XCircle className="w-6 h-6 text-red-400" />
+                </div>
+                <div>
+                  <h3 className="text-xl font-bold text-white mb-1">
+                    Query Refused
+                  </h3>
+                  <p className="text-sm text-slate-400">
+                    {state.refusalReason}
+                  </p>
+                </div>
+              </div>
+              <button
+                onClick={reset}
+                className="bg-white/5 hover:bg-white/10 text-slate-300 px-6 py-3 rounded-xl transition-all"
+              >
+                Try Another Query
+              </button>
+            </motion.div>
+          )}
+
+          {/* Rejected */}
+          {state.status === "rejected" && (
+            <motion.div
+              key="rejected"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="glass-strong rounded-2xl p-8 mb-8 text-center"
+            >
+              <p className="text-slate-300 mb-4">Research session rejected.</p>
+              <button
+                onClick={reset}
+                className="bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold px-6 py-3 rounded-xl"
+              >
+                New Research
+              </button>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        {/* Footer */}
+        <footer className="text-center mt-16 text-slate-500 text-sm">
+          <p>Built with FastAPI, Next.js, OpenAI, and MCP</p>
+          <p className="mt-2 text-xs">
+            Research is automated and informational. Not financial advice.
+          </p>
+        </footer>
       </div>
     </main>
   );
 }
 
-// ── AgentCard sub-component ───────────────────────────────────────────────────
+// ── AgentCard ──────────────────────────────────────────────────────────────────
 
 function AgentCard({ name, agent }: { name: string; agent: AgentState }) {
-  const label = AGENT_LABELS[name] ?? name;
+  const meta: AgentMeta = AGENT_META[name] ?? {
+    name,
+    icon: Brain,
+    color: "from-slate-500 to-slate-700",
+  };
+  const Icon = meta.icon;
+  const isRunning = agent.status === "running";
+  const isCompleted = agent.status === "completed";
+  const isFailed = agent.status === "failed";
 
   return (
-    <div className="flex items-start gap-3 p-3 bg-slate-50 rounded-lg border border-slate-100">
-      <div className="flex-shrink-0 mt-0.5">
-        {agent.status === "pending" && (
-          <div className="w-5 h-5 rounded-full bg-slate-300" />
-        )}
-        {agent.status === "running" && (
-          <Loader2 className="w-5 h-5 animate-spin text-blue-600" />
-        )}
-        {agent.status === "completed" && (
-          <CheckCircle className="w-5 h-5 text-green-600" />
-        )}
-        {agent.status === "failed" && (
-          <XCircle className="w-5 h-5 text-red-600" />
-        )}
+    <motion.div
+      initial={{ opacity: 0, x: -20 }}
+      animate={{ opacity: 1, x: 0 }}
+      transition={{ duration: 0.4 }}
+      className={cn(
+        "relative overflow-hidden rounded-xl border p-5 transition-all",
+        "border-white/10 bg-white/[0.02]",
+        isRunning && "border-blue-500/40 bg-blue-500/5",
+        isCompleted && "border-green-500/30 bg-green-500/5",
+        isFailed && "border-red-500/30 bg-red-500/5"
+      )}
+    >
+      {isRunning && (
+        <div className="absolute inset-0 shimmer pointer-events-none" />
+      )}
+
+      <div className="relative flex items-start gap-4">
+        <div
+          className={cn(
+            "p-3 rounded-xl flex-shrink-0 bg-gradient-to-br",
+            meta.color,
+            isRunning && "animate-pulse-glow"
+          )}
+        >
+          <Icon className="w-5 h-5 text-white" />
+        </div>
+
+        <div className="flex-1 min-w-0">
+          <div className="flex items-center justify-between gap-2 mb-1">
+            <h3 className="font-semibold text-white">{meta.name}</h3>
+            <StatusIndicator status={agent.status} />
+          </div>
+
+          {agent.outputPreview && (
+            <motion.p
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              className="text-sm text-slate-400 line-clamp-2 mt-2"
+            >
+              {agent.outputPreview}
+            </motion.p>
+          )}
+
+          {agent.toolCalls !== undefined && (
+            <p className="text-xs text-slate-500 mt-2">
+              {agent.toolCalls} tool{" "}
+              {agent.toolCalls === 1 ? "call" : "calls"} made
+            </p>
+          )}
+
+          {agent.error && (
+            <p className="text-xs text-red-400 mt-2">{agent.error}</p>
+          )}
+        </div>
       </div>
-      <div className="flex-1 min-w-0">
-        <div className="font-medium text-slate-900 text-sm">{label}</div>
-        {agent.outputPreview && (
-          <p className="text-xs text-slate-600 mt-1 line-clamp-2 leading-relaxed">
-            {agent.outputPreview}
-          </p>
-        )}
-        {agent.toolCalls !== undefined && (
-          <span className="text-xs text-slate-400 mt-1 block">
-            {agent.toolCalls} search{agent.toolCalls !== 1 ? "es" : ""}
-          </span>
-        )}
-        {agent.error && (
-          <p className="text-xs text-red-600 mt-1">{agent.error}</p>
-        )}
-      </div>
-    </div>
+    </motion.div>
   );
+}
+
+// ── StatusIndicator ───────────────────────────────────────────────────────────
+
+function StatusIndicator({ status }: { status: AgentStatus }) {
+  if (status === "pending") {
+    return <span className="text-xs text-slate-500">Pending</span>;
+  }
+  if (status === "running") {
+    return (
+      <div className="flex items-center gap-1.5">
+        <Loader2 className="w-3 h-3 animate-spin text-blue-400" />
+        <span className="text-xs text-blue-400 font-medium">Working</span>
+      </div>
+    );
+  }
+  if (status === "completed") {
+    return (
+      <motion.div
+        initial={{ scale: 0 }}
+        animate={{ scale: 1 }}
+        transition={{ type: "spring", stiffness: 500, damping: 15 }}
+        className="flex items-center gap-1.5"
+      >
+        <CheckCircle className="w-3 h-3 text-green-400" />
+        <span className="text-xs text-green-400 font-medium">Done</span>
+      </motion.div>
+    );
+  }
+  if (status === "failed") {
+    return (
+      <div className="flex items-center gap-1.5">
+        <XCircle className="w-3 h-3 text-red-400" />
+        <span className="text-xs text-red-400 font-medium">Failed</span>
+      </div>
+    );
+  }
+  return null;
 }
