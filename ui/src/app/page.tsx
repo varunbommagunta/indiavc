@@ -275,6 +275,20 @@ export default function Home() {
         style={{ animationDelay: "4s" }}
       />
 
+      {/* Unsplash hero background — abstract tech network */}
+      <div className="hero-image" />
+
+      {/* Unsplash secondary background — neural network pattern */}
+      <div
+        className="absolute inset-0 opacity-5 pointer-events-none"
+        style={{
+          backgroundImage: "url('https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=1920&q=80')",
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          mixBlendMode: "screen",
+        }}
+      />
+
       {/* Subtle grid overlay */}
       <div
         className="absolute inset-0 opacity-[0.03] pointer-events-none"
@@ -284,7 +298,7 @@ export default function Home() {
         }}
       />
 
-      <div className="relative z-10 max-w-5xl mx-auto px-4 py-12 md:px-8">
+      <div className="relative z-10 max-w-6xl mx-auto px-6 py-16 md:px-12 lg:px-16">
         {/* Hero header */}
         <motion.header
           initial={{ opacity: 0, y: -20 }}
@@ -297,14 +311,14 @@ export default function Home() {
             <span className="text-sm text-slate-300">AI Research Team</span>
           </div>
 
-          <h1 className="text-6xl md:text-7xl font-bold gradient-text mb-4">
+          <h1 className="text-7xl md:text-8xl lg:text-9xl font-bold gradient-text mb-4">
             IndiaVC
           </h1>
 
-          <p className="text-xl text-slate-400 max-w-2xl mx-auto">
+          <p className="text-2xl text-slate-400 max-w-2xl mx-auto">
             Multi-agent due diligence for Indian startups.
             <br />
-            <span className="text-slate-500 text-sm">
+            <span className="text-slate-500 text-base">
               5 specialized AI agents collaborate to produce investor-grade
               research briefs.
             </span>
@@ -374,7 +388,7 @@ export default function Home() {
               className="glass-strong rounded-2xl p-8 mb-8"
             >
               <div className="mb-6">
-                <h2 className="text-2xl font-bold text-white mb-2">
+                <h2 className="text-3xl font-bold text-white mb-2">
                   Researching:{" "}
                   <span className="gradient-text">{state.question}</span>
                 </h2>
@@ -413,7 +427,7 @@ export default function Home() {
                   <AlertTriangle className="w-6 h-6 text-amber-400" />
                 </div>
                 <div>
-                  <h3 className="text-xl font-bold text-white mb-1">
+                  <h3 className="text-2xl font-bold text-white mb-1">
                     Critic Review Complete
                   </h3>
                   <p className="text-sm text-slate-400">
@@ -461,7 +475,7 @@ export default function Home() {
                 <div className="p-3 rounded-xl bg-green-500/10 border border-green-500/30">
                   <CheckCircle className="w-6 h-6 text-green-400" />
                 </div>
-                <h2 className="text-2xl font-bold text-white">
+                <h2 className="text-3xl font-bold text-white">
                   Investor Brief
                 </h2>
               </div>
@@ -496,7 +510,7 @@ export default function Home() {
                   <XCircle className="w-6 h-6 text-red-400" />
                 </div>
                 <div>
-                  <h3 className="text-xl font-bold text-white mb-1">
+                  <h3 className="text-2xl font-bold text-white mb-1">
                     Query Refused
                   </h3>
                   <p className="text-sm text-slate-400">
