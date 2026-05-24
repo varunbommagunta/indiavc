@@ -18,6 +18,11 @@ class Settings(BaseSettings):
     critic_model: str = Field(default="gpt-4o")
     worker_model: str = Field(default="gpt-4o-mini")
 
+    mcp_backend: str = Field(
+        default="hybrid",
+        description="MCP backend: 'ddgs' (web only), 'custom' (structured data only), or 'hybrid' (both)",
+    )
+
     @field_validator("openai_api_key", mode="before")
     @classmethod
     def strip_api_key(cls, v: object) -> object:

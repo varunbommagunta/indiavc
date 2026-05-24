@@ -1,0 +1,506 @@
+[
+  {
+    "name": "Razorpay",
+    "aliases": ["razorpay", "razor pay"],
+    "sector": "fintech",
+    "founded": 2014,
+    "founders": ["Harshil Mathur", "Shashank Kumar"],
+    "headquarters": "Bangalore, India",
+    "description": "Payment gateway and financial services platform for Indian businesses, offering payment processing, banking, lending, payroll, and tax solutions.",
+    "valuation_usd_billion": 7.5,
+    "valuation_year": 2021,
+    "total_funding_usd_million": 742,
+    "key_investors": ["Tiger Global", "Sequoia Capital India", "Lone Pine Capital", "GIC"],
+    "funding_rounds": [
+      {"round": "Series F", "amount_usd_million": 375, "year": 2021, "valuation_usd_billion": 7.5},
+      {"round": "Series E", "amount_usd_million": 160, "year": 2021, "valuation_usd_billion": 3.0},
+      {"round": "Series D", "amount_usd_million": 100, "year": 2020}
+    ],
+    "competitors": ["PayU", "Cashfree", "Instamojo", "Pine Labs", "CCAvenue"],
+    "status": "private",
+    "notable_facts": ["Backed by YC W15", "Processes over $90B in payments annually", "Plans IPO 2025-2026", "Subject to ED investigation in 2023"]
+  },
+  {
+    "name": "CRED",
+    "aliases": ["cred", "cred club"],
+    "sector": "fintech",
+    "founded": 2018,
+    "founders": ["Kunal Shah"],
+    "headquarters": "Bangalore, India",
+    "description": "Credit card bill payment platform that rewards users with exclusive offers. Has expanded into peer-to-peer lending (CRED Cash), travel, and e-commerce.",
+    "valuation_usd_billion": 6.4,
+    "valuation_year": 2022,
+    "total_funding_usd_million": 900,
+    "key_investors": ["Falcon Edge Capital", "Coatue Management", "DST Global", "Tiger Global", "Sequoia Capital India"],
+    "funding_rounds": [
+      {"round": "Series F", "amount_usd_million": 251, "year": 2022, "valuation_usd_billion": 6.4},
+      {"round": "Series E", "amount_usd_million": 215, "year": 2021, "valuation_usd_billion": 4.0},
+      {"round": "Series D", "amount_usd_million": 215, "year": 2021}
+    ],
+    "competitors": ["Slice", "Jupiter", "Fi Money", "OneCard"],
+    "status": "private",
+    "notable_facts": ["High burn rate compared to revenue", "Popular with high-income credit card users", "IPL advertising blitz made brand iconic"]
+  },
+  {
+    "name": "PhonePe",
+    "aliases": ["phonepe", "phone pe"],
+    "sector": "fintech",
+    "founded": 2015,
+    "founders": ["Sameer Nigam", "Rahul Chari", "Burzin Engineer"],
+    "headquarters": "Bangalore, India",
+    "description": "India's largest UPI-based digital payments platform, offering payments, insurance, mutual funds, and financial services.",
+    "valuation_usd_billion": 12,
+    "valuation_year": 2023,
+    "total_funding_usd_million": 850,
+    "key_investors": ["Walmart", "General Atlantic", "Tiger Global", "TVS Capital Funds"],
+    "funding_rounds": [
+      {"round": "Series B", "amount_usd_million": 350, "year": 2023, "valuation_usd_billion": 12},
+      {"round": "Series A", "amount_usd_million": 100, "year": 2022}
+    ],
+    "competitors": ["Google Pay", "Paytm", "Amazon Pay", "MobiKwik"],
+    "status": "private",
+    "notable_facts": ["Spun off from Flipkart in 2022", "Over 500M registered users", "Largest UPI market share in India (~47%)"]
+  },
+  {
+    "name": "Paytm",
+    "aliases": ["paytm", "one97 communications"],
+    "sector": "fintech",
+    "founded": 2010,
+    "founders": ["Vijay Shekhar Sharma"],
+    "headquarters": "Noida, India",
+    "description": "Digital payments and financial services platform offering mobile wallets, UPI payments, banking (Paytm Payments Bank), lending, and commerce.",
+    "valuation_usd_billion": 3.0,
+    "valuation_year": 2024,
+    "total_funding_usd_million": 3100,
+    "key_investors": ["SoftBank", "Alibaba", "Ant Financial", "Berkshire Hathaway"],
+    "funding_rounds": [
+      {"round": "IPO", "amount_usd_million": 2500, "year": 2021, "valuation_usd_billion": 20},
+      {"round": "Pre-IPO", "amount_usd_million": 1000, "year": 2019}
+    ],
+    "competitors": ["PhonePe", "Google Pay", "Amazon Pay", "Razorpay"],
+    "status": "public",
+    "notable_facts": ["Listed on NSE/BSE in Nov 2021 at ₹2150, fell to ₹600 by 2022", "RBI ordered Paytm Payments Bank to stop operations in 2024", "Vijay Shekhar Sharma resigned as PPBL chairman"]
+  },
+  {
+    "name": "Pine Labs",
+    "aliases": ["pine labs", "pinelabs"],
+    "sector": "fintech",
+    "founded": 1998,
+    "founders": ["Tarun Upadhyay", "Lokvir Kapoor"],
+    "headquarters": "Noida, India",
+    "description": "Point-of-sale payment solutions and merchant financing platform serving retail merchants across India and Southeast Asia.",
+    "valuation_usd_billion": 5.0,
+    "valuation_year": 2021,
+    "total_funding_usd_million": 600,
+    "key_investors": ["Sequoia Capital", "PayPal Ventures", "Mastercard", "Temasek"],
+    "funding_rounds": [
+      {"round": "Series undisclosed", "amount_usd_million": 200, "year": 2021, "valuation_usd_billion": 5.0}
+    ],
+    "competitors": ["Razorpay", "MSwipe", "Mswipe Technologies", "Ezetap"],
+    "status": "private",
+    "notable_facts": ["Processes over $30B in payments annually", "Plans to list on US markets"]
+  },
+  {
+    "name": "Cashfree",
+    "aliases": ["cashfree", "cashfree payments"],
+    "sector": "fintech",
+    "founded": 2015,
+    "founders": ["Akash Sinha", "Reeju Datta"],
+    "headquarters": "Bangalore, India",
+    "description": "Full-stack payment solutions provider offering payment gateway, payouts, subscriptions, and banking API for Indian businesses.",
+    "valuation_usd_billion": 0.5,
+    "valuation_year": 2022,
+    "total_funding_usd_million": 40,
+    "key_investors": ["Y Combinator", "Apis Partners", "State Bank of India"],
+    "funding_rounds": [
+      {"round": "Series B", "amount_usd_million": 35, "year": 2021}
+    ],
+    "competitors": ["Razorpay", "PayU", "Instamojo"],
+    "status": "private",
+    "notable_facts": ["YC backed (W17)", "Processes over $40B annually", "Strong in disbursements/payouts segment"]
+  },
+  {
+    "name": "Yubi",
+    "aliases": ["yubi", "credavenue", "cred avenue"],
+    "sector": "fintech",
+    "founded": 2017,
+    "founders": ["Gaurav Kumar"],
+    "headquarters": "Chennai, India",
+    "description": "Debt marketplace and lending-as-a-service platform formerly known as CredAvenue. Connects borrowers and lenders for corporate debt and supply chain financing.",
+    "valuation_usd_billion": 1.3,
+    "valuation_year": 2022,
+    "total_funding_usd_million": 350,
+    "key_investors": ["Insight Partners", "Dragoneer Investment Group", "Norwest Venture Partners"],
+    "funding_rounds": [
+      {"round": "Series B", "amount_usd_million": 137, "year": 2022, "valuation_usd_billion": 1.3},
+      {"round": "Series A", "amount_usd_million": 90, "year": 2021}
+    ],
+    "competitors": ["TReDS platforms", "Incred", "Lendingkart", "Capital Float"],
+    "status": "private",
+    "notable_facts": ["Rebranded from CredAvenue to Yubi in 2022", "Operates India's largest debt marketplace", "Has disbursed over ₹2 lakh crore since founding"]
+  },
+  {
+    "name": "Byju's",
+    "aliases": ["byjus", "byju's", "think and learn"],
+    "sector": "edtech",
+    "founded": 2011,
+    "founders": ["Byju Raveendran", "Divya Gokulnath"],
+    "headquarters": "Bangalore, India",
+    "description": "Online learning platform offering personalized K-12 education, test prep (JEE, NEET, UPSC), and international learning programs.",
+    "valuation_usd_billion": 22,
+    "valuation_year": 2022,
+    "total_funding_usd_million": 5800,
+    "key_investors": ["Tiger Global", "BlackRock", "Sequoia Capital India", "Tencent", "Chan Zuckerberg Initiative"],
+    "funding_rounds": [
+      {"round": "Series undisclosed", "amount_usd_million": 800, "year": 2022},
+      {"round": "Series F", "amount_usd_million": 1500, "year": 2021, "valuation_usd_billion": 16.5}
+    ],
+    "competitors": ["Unacademy", "Vedantu", "Physics Wallah", "Khan Academy"],
+    "status": "private",
+    "notable_facts": ["India's first edtech unicorn", "Serious financial distress reported since 2023", "Delayed audited accounts for FY22", "Layoffs of 10,000+ employees", "Multiple lender disputes over $1.2B term loan B"]
+  },
+  {
+    "name": "Unacademy",
+    "aliases": ["unacademy"],
+    "sector": "edtech",
+    "founded": 2015,
+    "founders": ["Gaurav Munjal", "Roman Saini", "Hemesh Singh"],
+    "headquarters": "Bangalore, India",
+    "description": "Online test preparation platform for competitive exams including IIT-JEE, NEET, UPSC, and banking exams.",
+    "valuation_usd_billion": 3.4,
+    "valuation_year": 2021,
+    "total_funding_usd_million": 750,
+    "key_investors": ["SoftBank", "Tiger Global", "Sequoia Capital India", "Facebook"],
+    "funding_rounds": [
+      {"round": "Series H", "amount_usd_million": 440, "year": 2021, "valuation_usd_billion": 3.4}
+    ],
+    "competitors": ["Byju's", "Vedantu", "Physics Wallah"],
+    "status": "private",
+    "notable_facts": ["Multiple rounds of layoffs 2022-2023", "Shut down several subsidiaries", "Revenue grew but profitability elusive"]
+  },
+  {
+    "name": "Vedantu",
+    "aliases": ["vedantu"],
+    "sector": "edtech",
+    "founded": 2014,
+    "founders": ["Vamsi Krishna", "Pulkit Jain", "Saurabh Saxena", "Anand Prakash"],
+    "headquarters": "Bangalore, India",
+    "description": "Live online tutoring platform for K-12 students and competitive exam aspirants with interactive live classes.",
+    "valuation_usd_billion": 1.0,
+    "valuation_year": 2021,
+    "total_funding_usd_million": 280,
+    "key_investors": ["Tiger Global", "GGV Capital", "Coatue Management"],
+    "funding_rounds": [
+      {"round": "Series E", "amount_usd_million": 100, "year": 2021, "valuation_usd_billion": 1.0}
+    ],
+    "competitors": ["Byju's", "Unacademy", "Physics Wallah", "LEAD School"],
+    "status": "private",
+    "notable_facts": ["Significant layoffs in 2022", "Refocused on profitability after funding winter"]
+  },
+  {
+    "name": "Physics Wallah",
+    "aliases": ["physics wallah", "pw", "physicswallah"],
+    "sector": "edtech",
+    "founded": 2020,
+    "founders": ["Alakh Pandey", "Prateek Maheshwari"],
+    "headquarters": "Noida, India",
+    "description": "Affordable online learning platform offering JEE, NEET, and board exam preparation at disruptive price points.",
+    "valuation_usd_billion": 2.8,
+    "valuation_year": 2022,
+    "total_funding_usd_million": 210,
+    "key_investors": ["WestBridge Capital", "GSV Ventures"],
+    "funding_rounds": [
+      {"round": "Series A", "amount_usd_million": 100, "year": 2022, "valuation_usd_billion": 1.1},
+      {"round": "Series B", "amount_usd_million": 210, "year": 2024, "valuation_usd_billion": 2.8}
+    ],
+    "competitors": ["Byju's", "Unacademy", "Vedantu", "Allen Online"],
+    "status": "private",
+    "notable_facts": ["Founded as YouTube channel by Alakh Pandey", "Profitable unlike most edtech peers", "Courses priced at ₹1,000-3,000 vs ₹50,000+ for Byju's"]
+  },
+  {
+    "name": "Flipkart",
+    "aliases": ["flipkart", "flipkart india"],
+    "sector": "e-commerce",
+    "founded": 2007,
+    "founders": ["Sachin Bansal", "Binny Bansal"],
+    "headquarters": "Bangalore, India",
+    "description": "India's largest e-commerce marketplace competing with Amazon India, offering retail, grocery (Flipkart Supermart), fashion (Myntra), and fintech.",
+    "valuation_usd_billion": 35,
+    "valuation_year": 2021,
+    "total_funding_usd_million": 13000,
+    "key_investors": ["Walmart (acquired majority stake in 2018)", "Tiger Global", "Google", "SoftBank"],
+    "funding_rounds": [
+      {"round": "Walmart acquisition", "amount_usd_million": 16000, "year": 2018},
+      {"round": "Series J", "amount_usd_million": 3600, "year": 2021, "valuation_usd_billion": 37.6}
+    ],
+    "competitors": ["Amazon India", "Meesho", "Nykaa", "Snapdeal"],
+    "status": "private",
+    "notable_facts": ["Walmart acquired 77% stake for $16B in 2018", "Preparing for IPO in US markets", "Owns Myntra, Cleartrip, Shopsy"]
+  },
+  {
+    "name": "Meesho",
+    "aliases": ["meesho"],
+    "sector": "e-commerce",
+    "founded": 2015,
+    "founders": ["Vidit Aatrey", "Sanjeev Barnwal"],
+    "headquarters": "Bangalore, India",
+    "description": "Social commerce platform enabling resellers and small businesses to sell online via WhatsApp and social networks. Focuses on Tier-2/3 cities.",
+    "valuation_usd_billion": 3.9,
+    "valuation_year": 2022,
+    "total_funding_usd_million": 1150,
+    "key_investors": ["SoftBank", "Meta", "Sequoia Capital India", "Fidelity", "B Capital"],
+    "funding_rounds": [
+      {"round": "Series F", "amount_usd_million": 570, "year": 2022, "valuation_usd_billion": 4.9}
+    ],
+    "competitors": ["Flipkart Shopsy", "Amazon", "DealShare", "GlowRoad"],
+    "status": "private",
+    "notable_facts": ["Zero commission model for sellers", "Reached profitability in 2023", "200M+ customers, strong Bharat market", "Significant layoffs in 2022"]
+  },
+  {
+    "name": "Nykaa",
+    "aliases": ["nykaa", "fss"],
+    "sector": "e-commerce",
+    "founded": 2012,
+    "founders": ["Falguni Nayar"],
+    "headquarters": "Mumbai, India",
+    "description": "Online beauty, wellness, and fashion retail platform. Operates Nykaa (beauty) and Nykaa Fashion verticals, plus physical stores.",
+    "valuation_usd_billion": 4.0,
+    "valuation_year": 2023,
+    "total_funding_usd_million": 350,
+    "key_investors": ["TPG Growth", "Lighthouse India Fund", "Fidelity"],
+    "funding_rounds": [
+      {"round": "IPO", "amount_usd_million": 700, "year": 2021, "valuation_usd_billion": 13.0}
+    ],
+    "competitors": ["Purplle", "Myntra Beauty", "Amazon Beauty", "Sephora India"],
+    "status": "public",
+    "notable_facts": ["First Indian unicorn founded by a woman", "Listed on NSE in Nov 2021", "Stock fell 60%+ from IPO high by 2023", "Bonus issue controversy in 2022"]
+  },
+  {
+    "name": "Zomato",
+    "aliases": ["zomato"],
+    "sector": "foodtech",
+    "founded": 2008,
+    "founders": ["Deepinder Goyal", "Pankaj Chaddah"],
+    "headquarters": "Gurgaon, India",
+    "description": "Online food delivery and restaurant discovery platform. Also operates Blinkit (10-minute grocery delivery) and Hyperpure (B2B ingredients supply).",
+    "valuation_usd_billion": 10,
+    "valuation_year": 2023,
+    "total_funding_usd_million": 3000,
+    "key_investors": ["Ant Financial", "Tiger Global", "Sequoia Capital India", "Info Edge"],
+    "funding_rounds": [
+      {"round": "IPO", "amount_usd_million": 1300, "year": 2021, "valuation_usd_billion": 8.6}
+    ],
+    "competitors": ["Swiggy", "Dunzo", "Blinkit (acquired)"],
+    "status": "public",
+    "notable_facts": ["Listed on NSE/BSE in July 2021", "Acquired Blinkit (formerly Grofers) in 2022 for $568M", "Achieved EBITDA profitability in 2023", "Over 2 million delivery partners"]
+  },
+  {
+    "name": "Swiggy",
+    "aliases": ["swiggy"],
+    "sector": "foodtech",
+    "founded": 2014,
+    "founders": ["Sriharsha Majety", "Nandan Reddy", "Rahul Jaimini"],
+    "headquarters": "Bangalore, India",
+    "description": "Food delivery, quick commerce (Instamart), and hyperlocal logistics platform. Major competitor to Zomato.",
+    "valuation_usd_billion": 10.7,
+    "valuation_year": 2022,
+    "total_funding_usd_million": 3600,
+    "key_investors": ["SoftBank", "Prosus (Naspers)", "Tencent", "Accel", "Elevation Capital"],
+    "funding_rounds": [
+      {"round": "IPO", "amount_usd_million": 1350, "year": 2024, "valuation_usd_billion": 11.3},
+      {"round": "Pre-IPO", "amount_usd_million": 700, "year": 2022}
+    ],
+    "competitors": ["Zomato", "Dunzo", "Zepto", "Blinkit"],
+    "status": "public",
+    "notable_facts": ["Listed on NSE in November 2024", "Instamart competes in quick commerce", "Significant losses ongoing despite growth"]
+  },
+  {
+    "name": "Freshworks",
+    "aliases": ["freshworks", "freshdesk"],
+    "sector": "saas",
+    "founded": 2010,
+    "founders": ["Girish Mathrubootham", "Shan Krishnasamy"],
+    "headquarters": "San Mateo, USA (founded in Chennai, India)",
+    "description": "Cloud-based customer engagement and IT service management software suite including Freshdesk (support), Freshsales (CRM), and Freshservice (ITSM).",
+    "valuation_usd_billion": 4.5,
+    "valuation_year": 2023,
+    "total_funding_usd_million": 1000,
+    "key_investors": ["Sequoia Capital", "Tiger Global", "CapitalG (Google)", "Accel"],
+    "funding_rounds": [
+      {"round": "IPO", "amount_usd_million": 1034, "year": 2021, "valuation_usd_billion": 12.0}
+    ],
+    "competitors": ["Zendesk", "Salesforce Service Cloud", "HubSpot", "Zoho"],
+    "status": "public",
+    "notable_facts": ["Listed on NASDAQ in Sep 2021", "First SaaS unicorn from India to go public in US", "Revenue ~$596M in FY2023", "Laid off 660 employees in 2023"]
+  },
+  {
+    "name": "Postman",
+    "aliases": ["postman", "postman api"],
+    "sector": "saas",
+    "founded": 2014,
+    "founders": ["Abhinav Asthana", "Ankit Sobti", "Abhijit Kane"],
+    "headquarters": "San Francisco, USA (founded in Bangalore, India)",
+    "description": "API development and collaboration platform used by developers and teams to build, test, and document APIs.",
+    "valuation_usd_billion": 5.6,
+    "valuation_year": 2021,
+    "total_funding_usd_million": 433,
+    "key_investors": ["Insight Partners", "Coatue Management", "Battery Ventures"],
+    "funding_rounds": [
+      {"round": "Series D", "amount_usd_million": 225, "year": 2021, "valuation_usd_billion": 5.6}
+    ],
+    "competitors": ["Insomnia", "Swagger", "RapidAPI", "Stoplight"],
+    "status": "private",
+    "notable_facts": ["Started as Chrome extension", "25M+ users worldwide", "Layoffs of ~20% in 2023"]
+  },
+  {
+    "name": "Zoho",
+    "aliases": ["zoho", "zoho corporation"],
+    "sector": "saas",
+    "founded": 1996,
+    "founders": ["Sridhar Vembu", "Tony Thomas"],
+    "headquarters": "Chennai, India",
+    "description": "Bootstrapped SaaS company offering 50+ business apps including CRM, accounting, HR, and collaboration tools used by 100M+ users globally.",
+    "valuation_usd_billion": 15,
+    "valuation_year": 2022,
+    "total_funding_usd_million": 0,
+    "key_investors": [],
+    "funding_rounds": [],
+    "competitors": ["Salesforce", "Microsoft 365", "Freshworks", "HubSpot"],
+    "status": "private",
+    "notable_facts": ["Fully bootstrapped — never raised venture capital", "Profitable every year since founding", "CEO Sridhar Vembu moved to village in Tamil Nadu", "Revenue ~$1B annually"]
+  },
+  {
+    "name": "Ola",
+    "aliases": ["ola", "ola cabs", "ani technologies"],
+    "sector": "mobility",
+    "founded": 2010,
+    "founders": ["Bhavish Aggarwal", "Ankit Bhati"],
+    "headquarters": "Bangalore, India",
+    "description": "Ride-hailing platform and EV manufacturer. Operates Ola Cabs (ride hailing) and Ola Electric (EV scooters).",
+    "valuation_usd_billion": 7.3,
+    "valuation_year": 2022,
+    "total_funding_usd_million": 3800,
+    "key_investors": ["SoftBank", "Tiger Global", "Tencent", "Matrix Partners"],
+    "funding_rounds": [
+      {"round": "Series J+", "amount_usd_million": 500, "year": 2021}
+    ],
+    "competitors": ["Uber India", "Rapido", "InDrive", "Meru"],
+    "status": "private",
+    "notable_facts": ["Ola Electric listed on NSE in 2024", "Bhavish Aggarwal public dispute with Kunal Kamra over EV quality", "Expanding into consumer electronics and AI (Krutrim)"]
+  },
+  {
+    "name": "Rapido",
+    "aliases": ["rapido", "rapido bike taxi"],
+    "sector": "mobility",
+    "founded": 2015,
+    "founders": ["Aravind Sanka", "Pavan Guntupalli", "Rishikesh SR"],
+    "headquarters": "Bangalore, India",
+    "description": "Bike taxi and auto rickshaw aggregator focused on affordable last-mile connectivity across Indian cities.",
+    "valuation_usd_billion": 1.1,
+    "valuation_year": 2023,
+    "total_funding_usd_million": 320,
+    "key_investors": ["Swiggy", "Shell Ventures", "Nexus Venture Partners", "WestBridge Capital"],
+    "funding_rounds": [
+      {"round": "Series D", "amount_usd_million": 200, "year": 2023, "valuation_usd_billion": 1.1}
+    ],
+    "competitors": ["Ola Bikes", "Uber Moto", "InDrive"],
+    "status": "private",
+    "notable_facts": ["Profitable in several markets", "Expanded from bikes to autos and cabs", "50M+ users across 100+ cities"]
+  },
+  {
+    "name": "PharmEasy",
+    "aliases": ["pharmeasy", "pharm easy", "api holdings"],
+    "sector": "health",
+    "founded": 2015,
+    "founders": ["Dharmil Sheth", "Dhaval Shah"],
+    "headquarters": "Mumbai, India",
+    "description": "Online pharmacy and healthcare platform for medicines, diagnostics, teleconsultation, and health plans.",
+    "valuation_usd_billion": 5.6,
+    "valuation_year": 2021,
+    "total_funding_usd_million": 1500,
+    "key_investors": ["Prosus", "TPG", "Temasek", "CDPQ"],
+    "funding_rounds": [
+      {"round": "Series F+", "amount_usd_million": 350, "year": 2022},
+      {"round": "Series F", "amount_usd_million": 323, "year": 2021, "valuation_usd_billion": 5.6}
+    ],
+    "competitors": ["Netmeds (Reliance)", "1mg (Tata)", "Apollo Pharmacy Online"],
+    "status": "private",
+    "notable_facts": ["Withdrew IPO filing in 2022", "Down round: valuation cut significantly in 2023", "Acquired Thyrocare for ₹4,546 crore in 2021"]
+  },
+  {
+    "name": "1mg",
+    "aliases": ["1mg", "tata 1mg"],
+    "sector": "health",
+    "founded": 2015,
+    "founders": ["Prashant Tanwar", "Gaurav Agarwal", "Vikas Chauhan"],
+    "headquarters": "Gurgaon, India",
+    "description": "Online pharmacy, diagnostics, and teleconsultation platform. Acquired by Tata Digital in 2021.",
+    "valuation_usd_billion": 1.5,
+    "valuation_year": 2021,
+    "total_funding_usd_million": 320,
+    "key_investors": ["Tata Digital (majority owner)", "Sequoia Capital India", "HBM Healthcare"],
+    "funding_rounds": [
+      {"round": "Tata acquisition", "amount_usd_million": 150, "year": 2021, "valuation_usd_billion": 1.5}
+    ],
+    "competitors": ["PharmEasy", "Netmeds", "Apollo Pharmacy Online", "Practo"],
+    "status": "private (Tata Digital subsidiary)",
+    "notable_facts": ["Acquired by Tata Digital in 2021", "Integrated into Tata SuperApp (Neu)", "Strong brand trust in diagnostics"]
+  },
+  {
+    "name": "ShareChat",
+    "aliases": ["sharechat", "share chat", "mohalla tech"],
+    "sector": "social",
+    "founded": 2015,
+    "founders": ["Ankush Sachdeva", "Bhanu Pratap Singh", "Farid Ahsan"],
+    "headquarters": "Bangalore, India",
+    "description": "Indian-language social media platform with 100M+ monthly active users. Also operates Moj (short video platform competing with TikTok).",
+    "valuation_usd_billion": 5.0,
+    "valuation_year": 2022,
+    "total_funding_usd_million": 1100,
+    "key_investors": ["Temasek", "Google", "Twitter (acquired stake)", "Times Internet"],
+    "funding_rounds": [
+      {"round": "Series H", "amount_usd_million": 300, "year": 2022, "valuation_usd_billion": 5.0}
+    ],
+    "competitors": ["Josh (Dailyhunt)", "MX TakaTak", "Reels (Instagram)", "YouTube Shorts"],
+    "status": "private",
+    "notable_facts": ["Benefited from TikTok ban in India in 2020", "Significant losses with high content costs", "Multiple rounds of layoffs 2022-2023", "Down round reported in 2024"]
+  },
+  {
+    "name": "Dream11",
+    "aliases": ["dream11", "dream sports"],
+    "sector": "gaming",
+    "founded": 2008,
+    "founders": ["Harsh Jain", "Bhavit Sheth"],
+    "headquarters": "Mumbai, India",
+    "description": "India's largest fantasy sports platform with 190M+ users. Operates across cricket, football, kabaddi, basketball, and other sports.",
+    "valuation_usd_billion": 8.0,
+    "valuation_year": 2021,
+    "total_funding_usd_million": 1400,
+    "key_investors": ["Tiger Global", "Tencent", "Falcon Edge", "D1 Capital"],
+    "funding_rounds": [
+      {"round": "Series undisclosed", "amount_usd_million": 840, "year": 2021, "valuation_usd_billion": 8.0}
+    ],
+    "competitors": ["MPL (Mobile Premier League)", "MyTeam11", "Ballebaazi"],
+    "status": "private",
+    "notable_facts": ["IPL title sponsor since 2020", "Reportedly profitable since 2019", "Legal challenges around fantasy sports classification as 'game of skill'"]
+  },
+  {
+    "name": "Krutrim",
+    "aliases": ["krutrim", "krutrim ai", "krutrim si designs"],
+    "sector": "ai",
+    "founded": 2023,
+    "founders": ["Bhavish Aggarwal"],
+    "headquarters": "Bangalore, India",
+    "description": "Indian AI company building foundation models for Indian languages and an AI cloud platform. First Indian AI unicorn.",
+    "valuation_usd_billion": 1.0,
+    "valuation_year": 2024,
+    "total_funding_usd_million": 50,
+    "key_investors": ["Ashtapad", "Matrix Partners India", "Alpine Capital"],
+    "funding_rounds": [
+      {"round": "Series A", "amount_usd_million": 50, "year": 2024, "valuation_usd_billion": 1.0}
+    ],
+    "competitors": ["OpenAI (GPT)", "Google Gemini", "Sarvam AI", "CoRover.ai"],
+    "status": "private",
+    "notable_facts": ["Founded by Bhavish Aggarwal (Ola founder)", "First Indian AI unicorn", "Ola Krutrim product recalls due to factual errors", "Building India-focused LLM trained on Indic languages"]
+  }
+]

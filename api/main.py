@@ -27,7 +27,7 @@ from src.agents.orchestrator import Orchestrator
 from src.agents.web_researcher import WebResearcherAgent
 from src.agents.writer import WriterAgent
 from src.guardrails import Guardrails
-from src.mcp.client import MCPClientError, make_duckduckgo_client
+from src.mcp.client import MCPClientError, make_mcp_client
 from src.utils.logger import configure_logging, get_logger
 
 configure_logging(settings.log_level)
@@ -37,7 +37,7 @@ logger = get_logger(__name__)
 @asynccontextmanager
 async def lifespan(app: FastAPI) -> AsyncIterator[None]:
     logger.info("startup_begin")
-    mcp_client = make_duckduckgo_client()
+    mcp_client = make_mcp_client()
     try:
         await mcp_client.connect()
     except MCPClientError as exc:
